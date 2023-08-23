@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+<div class="flex flex-row justify-center mt-40">
+    <div class="flex flex-col">
+        <h1 class="text-3xl font-bold text-center py-3">
+            <a href="/students">Grade Book</a>
+            - {{.LastName}}, {{.FirstName}}
+        </h1>
+
+        {{if gt (len .Grades) 0}}
+        <table class="table-auto">
+            <tr>
+                <th class="border border-slate-300 bg-slate-100 px-3 py-1">Title</th>
+                <th class="border border-slate-300 bg-slate-100 px-3 py-1">Type</th>
+                <th class="border border-slate-300 bg-slate-100 px-3 py-1">Score</th>
+            </tr>
+            {{range .Grades}}
+            <tr>
+                <td class="border border-slate-300 px-3 py-1 text-center">{{.Title}}</td>
+                <td class="border border-slate-300 px-3 py-1 text-center">{{.Type}}</td>
+                <td class="border border-slate-300 px-3 py-1 text-center">{{.Score}}</td>
+            </tr>
+            {{end}}
+        </table>
+        {{else}}
+        <em>No grades available</em>
+        {{end}}
+
+        <fieldset class="border border-slate-400">
+            <legend class="p-2 font-bold">Add a Grade</legend>
+            <form action="/students/{{.ID}}/grades" method="POST">
+                <table>
+                    <tr>
+                        <td class="px-2 py-1">Title</td>
+                        <td>
+                            <input class="px-1.5 border border-slate-300" type="text" name="Title">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="px-2 py-1">Type</td>
+                        <td>
+                            <select class="px-1.5 border border-slate-300" name="Type" id="Type">
+                                <option value="Test">Test</option>
+                                <option value="Quiz">Quiz</option>
+                                <option value="Homework">Homework</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="px-2 py-1">Score</td>
+                        <td>
+                            <input class="px-1.5 border border-slate-300" type="number" min="0" max="100" step="1" name="Score">
+                        </td>
+                    </tr>
+                </table>
+                <button class="mx-2 my-1 px-2 py-1 rounded-full bg-sky-200" type="submit">Submit</button>
+            </form>
+        </fieldset>
+    </div>
+</div>
+</body>
+
+</html>
